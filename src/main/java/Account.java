@@ -1,3 +1,4 @@
+
 public class Account extends Bank{
 	private static int Account;
 	public static int Password;
@@ -5,8 +6,8 @@ public class Account extends Bank{
 	public static int Limit_Amount;
 	public static int Use_frequency;
 	
-	public int account(){
-		this.Account=info[0];
+	public int account(){//load로 활용해서 어떻게 구현할지 생각이 안나서 일일이 그냥 만들었다
+		this.Account=info[0];//controller가 메인될지 모르겠지만 거기서 이거 하나씩 불러서 인수 저장해야한다
 		return this.Account; 
 	}
 	public int password(){

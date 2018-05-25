@@ -46,14 +46,16 @@ public class Bank {
 		breader.close();
 		return Bank_name;
 	}
-	void update_Account(int Account_id, int Changed_Amount,int Use_frequency,String Bank) throws IOException
+	void update_Account(int Account_id, int Changed_Amount,int Use_frequency,int password,int limit,String Bank) throws IOException
 	{
 		this.file=new File(Bank);
 		String dummy="";
 		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		String line;
 		this.info[0]=Account_id;
+		this.info[1]=password;
 		this.info[2]=Changed_Amount;
+		this.info[3]=limit;
 		this.info[4]=Use_frequency;
 		while((line=br.readLine())!=null)
 		{
@@ -83,3 +85,4 @@ public class Bank {
 		
 	}
 	}
+	

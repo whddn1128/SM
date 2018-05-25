@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random; 
@@ -23,23 +22,25 @@ public class Controller {
 	Scanner s=new Scanner(System.in);
 	Bank bank=new Bank();
 	Bank rbank=new Bank();
-	void get_Account() throws IOException
+	void get_Account(String account_id) throws IOException
 	{
-		System.out.println("input Account number");
-		this.User_Account=s.nextInt();
+		//System.out.println("input Account number");
+		this.User_Account=Integer.parseInt(account_id);
+		
 		U_bank=bank.Find_info(this.User_Account);
 		Account account=new Account();
 		this.User_password=account.password();
 		this.User_Totalmoney=account.remains();
 		this.User_limit=account.Limit();
 		this.User_frequency=account.frequency();
+		System.out.println(this.User_password);
+		
 		
 	}
-
-	void get_ReceiverAccount() throws IOException
+	void get_ReceiverAccount(String account_id) throws IOException
 	{
-		System.out.println("input Reciever Account number");
-		this.Receiver_Account=s.nextInt();
+	//	System.out.println("input Reciever Account number");
+		this.Receiver_Account=Integer.parseInt(account_id);
 		R_bank=rbank.Find_info(this.Receiver_Account);
 		Account raccount=new Account();
 		this.Receiver_password=raccount.password();
@@ -50,59 +51,48 @@ public class Controller {
 	}
 	boolean CheckPassword(int Password)
 	{
-		System.out.println("your account password is "+this.User_password);
 		if(Password==this.User_password)
 		{
 			return true;
 		}
 		else
 		{
-			System.out.println("password missmatched ");
 			return false;
 		}
 	}
-	void input_Password()
+	boolean input_Password(String password)
 	{
 		boolean check;
 		while(true)
 		{
-		System.out.println("input password");
-		this.Password=s.nextInt();
+		this.Password=Integer.parseInt(password);
 		if((this.Password)>9999)
 		{
-			System.out.println("input 4 digit plz");
+			Mainview.show("4자리를 입력하세요");
 		}
 		
 		check=CheckPassword(this.Password);
 		if(check==true)
 		{
-			System.out.println("password checked");
-			break;
+			return true;
 		}
 		else if(check==false)
-		{
-			System.out.println("try again plz");
+		{	
+			return false;
 		}
 		}
 		
 	}
 	
-	void input_Amount()
+	int input_Amount(String amount)
 	{
-		int check=0;
-		while(true)
-		{
-		System.out.println(" input Amount");
-		Input_Amount=s.nextInt();
-		System.out.println("you have entered ["+Input_Amount+"] is it correct? press 1 to proceed");
-		check=s.nextInt();
-		if(check==1)
-		{
-			break;
-		}
-		}
-		
+		Input_Amount=Integer.parseInt(amount);
+		return this.Input_Amount;
 	}
+		void SetInput_Amount(int amount)
+		{
+			this.Input_Amount=amount;
+		}
 	boolean Limit_Amount()
 	{
 		if(Input_Amount>User_limit)
@@ -115,90 +105,93 @@ public class Controller {
 			return true;
 		}
 	}
+	boolean max()
+	{
+		if(Input_Amount>User_Totalmoney)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	String get_UAccount(){
+		String str=String.valueOf(this.User_Account);
+		return str;
+	}
+	int getInputAmount()
+	{
+		return this.Input_Amount;
+	}
+	int getRAccount()
+	{
+		return this.Receiver_Account;
+	}
+	int getsumU()
+	{
+
+		return this.User_Totalmoney-this.Input_Amount;
+	}
+	int getsumR()
+	{
+		return this.User_Totalmoney+this.Input_Amount;
+	}
+	int getUfreq()
+	{
+		return this.User_frequency+1;
+	}
+	int getRfreq()
+	{
+		return this.Receiver_frequency;
+	}
+	int getUpassword()
+	{
+		return this.User_password;
+	}
+	int getRpassword()
+	{
+		return this.Receiver_password;
+	}
+	int getUlimit()
+	{
+		return this.User_limit;
+	}
+	int getRlimit()
+	{
+		return this.Receiver_limit;
+	}
+	String getUbank()
+	{
+		return U_bank;
+	}
+	String getRbank()
+	{
+		return R_bank;
+	}
+	
 	void category(String category) throws IOException
 	{
 		if(category.equals("send"))
 		{
-			boolean limitcheck;
 			Send send=new Send();
-			input_Password();
-			get_ReceiverAccount();
-			while(true)
-			{
-			input_Amount();
-			this.Input_Amount=send.get_Amount(this.Input_Amount);
-			limitcheck=Limit_Amount();	
-			if(limitcheck==false)
-			{
-				System.out.println("your Limit is:"+User_limit+" check the value again");
-			}
-			else if(limitcheck==true)
-			{
-				System.out.println("proceeding... wait a sec plz");break;
-			}
-			}
-			bank.update_Account(this.User_Account,this.User_Totalmoney-this.Input_Amount,this.User_frequency+1,U_bank);
-			rbank.update_Account(Receiver_Account,Receiver_Totalmoney+Input_Amount,Receiver_frequency,R_bank);
-			Payback payback=new Payback();
-			payback.Check_Payback(User_frequency);
-			PrintStatement p=new PrintStatement();
-			p.set_Amount(this.User_Totalmoney-this.Input_Amount,this.Input_Amount);
-			p.Get_Answer();
 		}
 		if(category.equals("withdraw"))
 		{
 			boolean limitcheck;
 			Withdraw withdraw=new Withdraw();
-			System.out.println(this.User_Account);
-			System.out.println(this.User_password);
-			System.out.println(this.User_Totalmoney);
-			System.out.println(this.User_limit);
-			System.out.println(this.User_frequency);
-			input_Password();
-			while(true)
-			{
-			input_Amount();
-			this.Input_Amount=withdraw.get_Amount(this.Input_Amount);
-			limitcheck=Limit_Amount();
-			if(limitcheck==false)
-			{
-				System.out.println("your Limit is:"+User_limit+" check the value again");
-			}
-			else if(limitcheck==true)
-			{
-				System.out.println("proceed");break;
-			}
-			}
-			bank.update_Account(this.User_Account,this.User_Totalmoney-this.Input_Amount,this.User_frequency+1,U_bank);
-			Payback payback=new Payback();
-			payback.Check_Payback(User_frequency);
-			PrintStatement p=new PrintStatement();
-			p.set_Amount(this.User_Totalmoney-this.Input_Amount,this.Input_Amount);
-			p.Get_Answer();
+			
 		}
 		if(category.equals("deposit"))
 		{
-			Deposit deposit=new Deposit();
-			input_Amount();
-			deposit.get_Amount(this.Input_Amount);
-			this.Input_Amount=deposit.send_Amount();
-			bank.update_Account(this.User_Account,this.User_Totalmoney+this.Input_Amount,this.User_frequency+1,U_bank);
-			Payback payback=new Payback();
-			payback.Check_Payback(User_frequency);
-			PrintStatement p=new PrintStatement();
-			p.set_Amount(this.User_Totalmoney+this.Input_Amount,this.Input_Amount);
-			p.Get_Answer();
+		
 		}
 		if(category.equals("check remain"))
 		{
-			CheckRemain checkremain=new CheckRemain();
-			checkremain.show_Amount(User_Totalmoney);
-			checkremain.Print_Total_Amount();
-			Payback payback=new Payback();
-			payback.Check_Payback(User_frequency);
-			PrintStatement p=new PrintStatement();
-			p.set_Amount(this.User_Totalmoney+this.Input_Amount,this.Input_Amount);
-			p.Get_Answer();
+		  CheckRemain checkremain=new CheckRemain();
+		  checkremain.show_Amount(User_Totalmoney);
 		}
 	}
 }
+	
+

@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 public class Payback {
 	private static int Gift_code;
@@ -14,7 +13,7 @@ public class Payback {
 		{
 			return 2;
 		}
-		else if(frequency>=30&&frequency<40)
+		else if(frequency>=30)
 		{
 			return 3;
 		}
@@ -24,34 +23,34 @@ public class Payback {
 		}
 	}
 	
-	void Check_Payback(int frequency)
+	int Check_Payback(int frequency)
 	{
 		int option=0;
+		int result=0;
 		if(frequency>=10)
 		{
 			option=check_Frequency(frequency);
 			switch(option)
 			{
 			case -1:
-				System.out.println("payback not available");
+				 result=0;break;
 			case 1:
-				Choose_Gift_code(1);break;
+				result=1;break;
 			case 2:
-				Choose_Gift_code(2);break;
+				result=2;break;
 			case 3:
-				Choose_Gift_code(3);break;
+				result=3;break;
 			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 		}
+		return result;
 	}
-	void Choose_Gift_code(int option)
+	void Choose_Gift_code(int option,int choice)
 	{
-		int choice=0;
-		Scanner s= new Scanner(System.in);
-		System.out.println("choose one you want to get");
+		//Scanner s= new Scanner(System.in);
+		//System.out.println("choose one you want to get");
 		if(option==1)
 		{
-			System.out.println("1= cofee 2= beverage");
-			choice=s.nextInt();
+			//System.out.println("1= cofee 2= beverage");
 			switch(choice)
 			{
 			case 1:
@@ -59,13 +58,13 @@ public class Payback {
 			case 2:
 				this.Gift_code=12; break;
 				default:
-					System.out.println("invalid choice choose again");
+				//	System.out.println("invalid choice choose again");
 			}
 		}
 		else if(option==2)
 		{
-			System.out.println("1=piece cake 2=piece pizza");
-			choice=s.nextInt();
+			//System.out.println("1=piece cake 2=piece pizza");
+			//choice=1;//s.nextInt();
 			switch(choice)
 			{
 			case 1:
@@ -73,13 +72,13 @@ public class Payback {
 			case 2:
 				this.Gift_code=22; break;
 				default:
-					System.out.println("invalid choice choose again");
+					//System.out.println("invalid choice choose again");
 			}
 		}
 		else if(option==3)
 		{
-			System.out.println("1=rice packet 2=5000won");
-			choice=s.nextInt();
+			//System.out.println("1=rice packet 2=5000won");
+			//choice=s.nextInt();
 			switch(choice)
 			{
 			case 1:
@@ -87,7 +86,7 @@ public class Payback {
 			case 2:
 				this.Gift_code=32; break;
 				default:
-					System.out.println("invalid choice choose again");
+				//	System.out.println("invalid choice choose again");
 			}
 		}
 	}

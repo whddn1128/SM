@@ -1,3 +1,4 @@
+
 public class CheckRemain {
 	private static int Remain;
 	void show_Amount(int amount)
@@ -8,8 +9,9 @@ public class CheckRemain {
 	{
 		this.Remain=amount;
 	}
-	void Print_Total_Amount()
+	String Print_Total_Amount()
 	{
-		System.out.println("your remain money id: "+Remain);
+		String str="your remain money : "+Remain;
+		return str;
 	}
 }
