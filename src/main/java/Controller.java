@@ -2,54 +2,69 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random; 
 public class Controller {
-	public static int User_Account;
-	public static int Receiver_Account;
-	private static int Password;
+	public static long User_Account;
+	public static long Receiver_Account;
+	private static long Password;
 	private static String Category;
-	public static int Input_Amount;
-	private static int User_id;
-	private static int User_password;
-	private static int User_limit;
-	private static int User_Totalmoney;
-	private static int User_frequency;
-	private static int Receiver_id;
-	private static int Receiver_password;
-	private static int Receiver_limit;
-	private static int Receiver_Totalmoney;
-	private static int Receiver_frequency;
+	public static long Input_Amount;
+	private static long User_id;
+	private static long User_password;
+	private static long User_limit;
+	private static long User_Totalmoney;
+	private static long User_frequency;
+	private static long Receiver_id;
+	private static long Receiver_password;
+	private static long Receiver_limit;
+	private static long Receiver_Totalmoney;
+	private static long Receiver_frequency;
 	private static String U_bank;
 	private static String R_bank;
 	Scanner s=new Scanner(System.in);
 	Bank bank=new Bank();
 	Bank rbank=new Bank();
-	void get_Account(String account_id) throws IOException
+	boolean get_Account(String account_id) throws IOException
 	{
 		//System.out.println("input Account number");
-		this.User_Account=Integer.parseInt(account_id);
-		
-		U_bank=bank.Find_info(this.User_Account);
-		Account account=new Account();
-		this.User_password=account.password();
-		this.User_Totalmoney=account.remains();
-		this.User_limit=account.Limit();
-		this.User_frequency=account.frequency();
-		System.out.println(this.User_password);
+		this.User_Account=Long.parseLong(account_id);
+		if(bank.Find_info(this.User_Account)!=null)
+		{
+			U_bank=bank.Find_info(this.User_Account);
+			Account account=new Account();
+			this.User_password=account.password();
+			this.User_Totalmoney=account.remains();
+			this.User_limit=account.Limit();
+			this.User_frequency=account.frequency();
+			System.out.println(this.User_password);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 		
 		
 	}
-	void get_ReceiverAccount(String account_id) throws IOException
+	boolean get_ReceiverAccount(String account_id) throws IOException
 	{
 	//	System.out.println("input Reciever Account number");
-		this.Receiver_Account=Integer.parseInt(account_id);
+		this.Receiver_Account=Long.parseLong(account_id);
+		if(rbank.Find_info(this.Receiver_Account)!=null)
+		{
 		R_bank=rbank.Find_info(this.Receiver_Account);
 		Account raccount=new Account();
 		this.Receiver_password=raccount.password();
 		this.Receiver_Totalmoney=raccount.remains();
 		this.Receiver_limit=raccount.Limit();
 		this.Receiver_frequency=raccount.frequency();
+		return true;
+		}
+		else
+		{
+			return false;
+		}
 		
 	}
-	boolean CheckPassword(int Password)
+	boolean CheckPassword(long Password)
 	{
 		if(Password==this.User_password)
 		{
@@ -65,7 +80,13 @@ public class Controller {
 		boolean check;
 		while(true)
 		{
-		this.Password=Integer.parseInt(password);
+			try{
+		this.Password=Long.parseLong(password);
+			}
+			catch(java.lang.NumberFormatException e){
+				Mainview.show("숫자만 입력가능합니다");
+			}
+			
 		if((this.Password)>9999)
 		{
 			Mainview.show("4자리를 입력하세요");
@@ -84,15 +105,15 @@ public class Controller {
 		
 	}
 	
-	int input_Amount(String amount)
+	long input_Amount(String amount)
 	{
-		Input_Amount=Integer.parseInt(amount);
+		Input_Amount=Long.parseLong(amount);
 		return this.Input_Amount;
 	}
-		void SetInput_Amount(int amount)
-		{
-			this.Input_Amount=amount;
-		}
+	void SetInput_Amount(long amount)
+	{
+		this.Input_Amount=amount;
+	}
 	boolean Limit_Amount()
 	{
 		if(Input_Amount>User_limit)
@@ -120,44 +141,48 @@ public class Controller {
 		String str=String.valueOf(this.User_Account);
 		return str;
 	}
-	int getInputAmount()
+	long getInputAmount()
 	{
-		return this.Input_Amount;
+			if(this.Input_Amount<0)
+				return -this.Input_Amount;
+			else
+				return this.Input_Amount;
+			
 	}
-	int getRAccount()
+	long getRAccount()
 	{
 		return this.Receiver_Account;
 	}
-	int getsumU()
+	long getsumU()
 	{
 
 		return this.User_Totalmoney-this.Input_Amount;
 	}
-	int getsumR()
+	long getsumR()
 	{
-		return this.User_Totalmoney+this.Input_Amount;
+		return this.Receiver_Totalmoney+this.Input_Amount;
 	}
-	int getUfreq()
+	long getUfreq()
 	{
 		return this.User_frequency+1;
 	}
-	int getRfreq()
+	long getRfreq()
 	{
 		return this.Receiver_frequency;
 	}
-	int getUpassword()
+	long getUpassword()
 	{
 		return this.User_password;
 	}
-	int getRpassword()
+	long getRpassword()
 	{
 		return this.Receiver_password;
 	}
-	int getUlimit()
+	long getUlimit()
 	{
 		return this.User_limit;
 	}
-	int getRlimit()
+	long getRlimit()
 	{
 		return this.Receiver_limit;
 	}

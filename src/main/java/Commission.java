@@ -2,10 +2,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 public class Commission {
 	private static int Current_Time;
-	public static int Commission;
-	public static int Total_Amount;
+	public static long Commission;
+	public static long Total_Amount;
 	
-	void get_Commission(int amount){
+	void get_Commission(long amount){
 		check_Currenttime();
 		if(Current_Time<22)
 		{
@@ -23,10 +23,18 @@ public class Commission {
 		String time=e1.format(date);
 		Current_Time=Integer.parseInt(time);
 	}
-	void count_commission(int amount){
+	void count_commission(long amount){
 		Total_Amount=amount+Commission;
 	}
-	int get_TotalAmount(){
+	long get_TotalAmount(){
 		return Total_Amount;
+	}
+	long get_commission()
+	{
+		return Commission;
+	}
+	void set_commissionzero()
+	{
+		Commission=0;
 	}
 }

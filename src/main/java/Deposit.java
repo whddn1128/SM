@@ -1,15 +1,15 @@
 
 public class Deposit {
-	private static int Amount;
+	private static long Amount;
 	
-	void set_Amount(int amount)
+	void set_Amount(long amount)
 	{
 		this.Amount=amount;
 	}
 	
-	int get_Amount()
+	long get_Amount()
 	{
-		return this.Amount;
+		return -this.Amount;
 	}
 	
 }

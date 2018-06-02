@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Payback {
 	private static int Gift_code;
 	
-	int check_Frequency(int frequency)
+	int check_Frequency(long frequency)
 	{
 	
 		if(frequency>=10&&frequency<20)
@@ -23,7 +23,7 @@ public class Payback {
 		}
 	}
 	
-	int Check_Payback(int frequency)
+	int Check_Payback(long frequency)
 	{
 		int option=0;
 		int result=0;
@@ -44,14 +44,14 @@ public class Payback {
 		}
 		return result;
 	}
-	void Choose_Gift_code(int option,int choice)
+	void Choose_Gift_code(long option,long choice)
 	{
 		//Scanner s= new Scanner(System.in);
 		//System.out.println("choose one you want to get");
 		if(option==1)
 		{
 			//System.out.println("1= cofee 2= beverage");
-			switch(choice)
+			switch((int)choice)
 			{
 			case 1:
 				this.Gift_code=11; break;
@@ -65,7 +65,7 @@ public class Payback {
 		{
 			//System.out.println("1=piece cake 2=piece pizza");
 			//choice=1;//s.nextInt();
-			switch(choice)
+			switch((int)choice)
 			{
 			case 1:
 				this.Gift_code=21; break;
@@ -79,7 +79,7 @@ public class Payback {
 		{
 			//System.out.println("1=rice packet 2=5000won");
 			//choice=s.nextInt();
-			switch(choice)
+			switch((int)choice)
 			{
 			case 1:
 				this.Gift_code=31; break;
